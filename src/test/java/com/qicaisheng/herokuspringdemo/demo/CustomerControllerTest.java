@@ -47,4 +47,18 @@ public class CustomerControllerTest {
         assertThat(customers.size()).isEqualTo(1);
 
     }
+
+
+    @Test
+    void shouldCreateCustomer() {
+        MockMvcResponse response = RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .body(new Customer("first", "second"))
+                .post("/customers");
+
+        Customer customer = response.getBody().as(Customer.class);
+
+        Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
+        assertThat(response.getStatusCode()).isEqualTo(200);
+        assertThat(customer).isNotNull();
+    }
 }
