@@ -4,5 +4,7 @@ language: java
 jdk:
   - openjdk8
 
-script:
-  - ./mvnw test
+jobs:
+  include:
+    - stage: test
+      script: ./mvnw test
